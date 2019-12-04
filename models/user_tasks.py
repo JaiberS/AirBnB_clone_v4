@@ -8,7 +8,7 @@ from sqlalchemy import Column, Integer, String, Float, ForeignKey
 STORAGE_TYPE = os.environ.get('HBNB_TYPE_STORAGE')
 
 
-class Review(BaseModel, Base):
+class UserTasks(BaseModel, Base):
     """Review class handles all application reviews"""
     if STORAGE_TYPE == "db":
         __tablename__ = 'reviews'
