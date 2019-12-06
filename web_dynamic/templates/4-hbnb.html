@@ -58,8 +58,8 @@
 	    <h4>&nbsp;</h4>
 	    <ul class="popover">
 	      {% for user in users %}
-          <H2><INPUT type="checkbox" style="margin-right: 10px" data-id={{user.id}} data-name={{user.name}}>{{ user.name }}</H2>
-	      <UL>
+          <H2 class={{user.id}}><INPUT type="checkbox" style="margin-right: 10px" data-id={{user.id}} data-name={{user.name}}>{{ user.name }}</H2>
+	      <UL class={{user.id}}>
 		{% for task in tasks %}
         {% if task.user_id == user.id %}
         <LI>{{ task.description }}</LI>
@@ -70,6 +70,9 @@
 	    </ul>
 	  </div>
 	  <button id="b2">Delete</button>
+	  <button id="b3">Update Task</button>
+	  <button id="b4">Create Task</button>
+	  <button id="b5">Update User</button>
 
 	  <!-- **********************
 	       SEARCH BUTTON

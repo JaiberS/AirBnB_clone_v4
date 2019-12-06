@@ -18,6 +18,7 @@ class User(BaseModel, Base):
     if STORAGE_TYPE == "db":
         __tablename__ = 'users'
         name = Column(String(128), nullable=False)
+        tasks = relationship('UserTasks', backref='user', cascade='delete')
     else:
         name = ''
 
