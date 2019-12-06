@@ -100,3 +100,5 @@ create: create [ARG] [PARAM 1] [PARAM 2] ...
 
 ---
 
+Example video:
+https://drive.google.com/file/d/1cztPerXUVfDoM-c-QMGJ1eaRvm1f64ST/view?usp=sharing
