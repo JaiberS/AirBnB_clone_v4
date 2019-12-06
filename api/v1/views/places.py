@@ -5,7 +5,7 @@ Flask route that returns json status response
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from flasgger.utils import swag_from
-from models import storage, CNC, UserTasks
+from models import storage, CNC
 from os import environ
 from json import dumps
 from pdb import set_trace
@@ -47,37 +47,12 @@ def places_per_city(city_id=None):
         return jsonify(new_object.to_json()), 201
 
 
-@swag_from('swagger_yaml/task_id.yml', methods=['GET', 'DELETE', 'PUT', 'POST'])
-@app_views.route('/places/<task_id>', methods=['GET', 'DELETE', 'PUT', 'POST'])
+@swag_from('swagger_yaml/task_id.yml', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/places/<task_id>', methods=['GET', 'DELETE', 'PUT'])
 def places_with_id(task_id=None):
     """
         places route to handle http methods for given place
     """
-    if request.method == 'POST':
-        req_json = request.get_json()
-        if req_json is None:
-            abort(400, 'Not a JSON')
-        user_id = req_json.get("user_id")
-        if user_id is None:
-            abort(400, 'Missing user_id')
-        user_obj = storage.get('User', user_id)
-        if user_obj is None:
-            abort(404, 'Not found')
-        if req_json.get("description") is None:
-            abort(400, 'Missing name')
-        if req_json.get("state") is None:
-            abort(400, 'Missing state')
-        new_object = UserTasks(**req_json)
-        new_object.save()
-        users = storage.all('User').values()
-        result = []
-        for u in users:
-            uj = u.to_json()
-            uj.setdefault('tasks', u.u_tasks)
-            result.append(uj)
-        return jsonify(result), 200
-
-
     task_obj = storage.get('UserTasks', task_id)
     if task_obj is None:
         abort(404, 'Not found')
@@ -102,7 +77,6 @@ def places_with_id(task_id=None):
             uj.setdefault('tasks', u.u_tasks)
             result.append(uj)
         return jsonify(result), 200
-
 
 
 @app_views.route('/places_search', methods=['GET', 'POST'])
