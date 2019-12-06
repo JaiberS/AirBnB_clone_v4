@@ -5,11 +5,7 @@ Flask route that returns json status response
 from api.v1.views import app_views
 from flask import abort, jsonify, request
 from flasgger.utils import swag_from
-<<<<<<< HEAD
-from models import storage, CNC
-=======
 from models import storage, CNC, UserTasks
->>>>>>> parent of 7d41b1b... [Fixes] Removing old files
 from os import environ
 from json import dumps
 from pdb import set_trace
@@ -51,19 +47,12 @@ def places_per_city(city_id=None):
         return jsonify(new_object.to_json()), 201
 
 
-<<<<<<< HEAD
-@swag_from('swagger_yaml/task_id.yml', methods=['GET', 'DELETE', 'PUT'])
-@app_views.route('/places/<task_id>', methods=['GET', 'DELETE', 'PUT'])
-=======
 @swag_from('swagger_yaml/task_id.yml', methods=['GET', 'DELETE', 'PUT', 'POST'])
 @app_views.route('/places/<task_id>', methods=['GET', 'DELETE', 'PUT', 'POST'])
->>>>>>> parent of 7d41b1b... [Fixes] Removing old files
 def places_with_id(task_id=None):
     """
         places route to handle http methods for given place
     """
-<<<<<<< HEAD
-=======
     if request.method == 'POST':
         req_json = request.get_json()
         if req_json is None:
@@ -88,8 +77,6 @@ def places_with_id(task_id=None):
             result.append(uj)
         return jsonify(result), 200
 
-
->>>>>>> parent of 7d41b1b... [Fixes] Removing old files
     task_obj = storage.get('UserTasks', task_id)
     if task_obj is None:
         abort(404, 'Not found')
@@ -116,10 +103,6 @@ def places_with_id(task_id=None):
         return jsonify(result), 200
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> parent of 7d41b1b... [Fixes] Removing old files
 @app_views.route('/places_search', methods=['GET', 'POST'])
 def places_search():
     """

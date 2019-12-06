@@ -76,11 +76,8 @@ $(".close").click(function() {
       });
     $("#myModal").show();
     $("#b6").show();
-<<<<<<< HEAD
-=======
      $("#b7").hide();
      $("#b8").hide();
->>>>>>> parent of 7d41b1b... [Fixes] Removing old files
  });
 
 
@@ -128,24 +125,15 @@ $(".close").click(function() {
       });
     $("#myModal").show();
     $("#b7").show();
-<<<<<<< HEAD
-=======
      $("#b8").hide();
      $("#b6").hide();
->>>>>>> parent of 7d41b1b... [Fixes] Removing old files
  });
 
 
   $('#b7').click(function () {
-<<<<<<< HEAD
-      $(".places article").remove();
-      $(".locations h4").text('');
-      for (iter in listb){
-=======
       $(".locations h4").text('');
       for (iter in listb){
       $(".places article").remove();
->>>>>>> parent of 7d41b1b... [Fixes] Removing old files
       if ($('#0rad' + listb[iter]).is(':checked')){
         dictask = {"description": document.getElementById("text" + listb[iter]).value, "state": "to_do"} 
       } else {
@@ -157,8 +145,6 @@ $(".close").click(function() {
               contentType: "application/json",
               data : JSON.stringify(dictask),
               success : function(data) {
-<<<<<<< HEAD
-=======
             },
       });
       } 
@@ -219,7 +205,6 @@ $(".close").click(function() {
               contentType: "application/json",
               data : JSON.stringify(dictask),
               success : function(data) {
->>>>>>> parent of 7d41b1b... [Fixes] Removing old files
                 $.each(data, function(key, value) {
                  $('.places').append('<article><div class="title"><h2>' + value.name + '</h2></div><div class="information"></div><div class="description' + value.id + '"></div></article>'); 
                  for (iter in value.tasks){
@@ -229,20 +214,11 @@ $(".close").click(function() {
                 });
             },
       });
-<<<<<<< HEAD
-      } 
-    listb = []
-     $("#b7").hide();
-    $("#myModal").hide();
- });
-=======
     listb = []
      $("#b8").hide();
     $("#myModal").hide();
  });
-$
 
->>>>>>> parent of 7d41b1b... [Fixes] Removing old files
 $("#b2").click(function() {
       $(".places article").remove();
       $(".locations h4").text('');
