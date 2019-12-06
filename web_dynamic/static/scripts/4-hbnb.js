@@ -1,7 +1,9 @@
 $(document).ready(function () {
   const lista = [];
   let nombres = [];
-  $('input[type="checkbox"]').click(function () {
+  let listb = [];
+    let dictask = {};
+    $('input[type="checkbox"]').click(function () {
     if ($(this).prop('checked') === true) {
       lista.push($(this).attr('data-id'));
       nombres.push($(this).attr('data-name'));
@@ -97,10 +99,62 @@ $(".close").click(function() {
             },
       });
       } 
-    $("#myModal").hide();
     $("#b6").hide();
+    $("#myModal").hide();
 
   });
+
+ $("#b3").click(function() {
+     $(".modal-content .tform").remove();
+      $.ajax({
+              type : "POST",
+              url : "http://localhost:5003/api/v1/places_search/",
+              contentType: "application/json",
+              data : JSON.stringify({users: lista}),
+              success : function(data) {
+                $.each(data, function(key, value) {        
+                      $(".modal-content").append('<div class="tform"></div>')
+                    for (iter in value.tasks){
+                      $(".modal-content .tform").append('Description<br><input type="text" name="description" value=' + value.tasks[iter].description + ' id="text' + value.tasks[iter].id + '"><br><p><input type="radio" name="state" value=state id="0rad' + value.tasks[iter].id + '" required checked>to_do<br><input type="radio" name="state" value=state id="1rad' + value.tasks[iter].id + '" required>done</p><br>')
+                    listb.push(value.tasks[iter].id)
+                    }
+                });
+            },
+      });
+    $("#myModal").show();
+    $("#b7").show();
+ });
+
+
+  $('#b7').click(function () {
+      $(".places article").remove();
+      $(".locations h4").text('');
+      for (iter in listb){
+      if ($('#0rad' + listb[iter]).is(':checked')){
+        dictask = {"description": document.getElementById("text" + listb[iter]).value, "state": "to_do"} 
+      } else {
+        dictask = {"description": document.getElementById("text" + listb[iter]).value, "state": "done"} 
+      }
+      $.ajax({
+              type : "PUT",
+              url : "http://localhost:5003/api/v1/places/" + listb[iter],
+              contentType: "application/json",
+              data : JSON.stringify(dictask),
+              success : function(data) {
+                $.each(data, function(key, value) {
+                 $('.places').append('<article><div class="title"><h2>' + value.name + '</h2></div><div class="information"></div><div class="description' + value.id + '"></div></article>'); 
+                 for (iter in value.tasks){
+                    $('.places .description' + value.id).append('<h1>' + value.tasks[iter].description + '</h1><h2>' + value.tasks[iter].state +'</h2>')
+                 }
+ 
+                });
+            },
+      });
+      } 
+    listb = []
+     $("#b7").hide();
+    $("#myModal").hide();
+ });
 $("#b2").click(function() {
       $(".places article").remove();
       $(".locations h4").text('');

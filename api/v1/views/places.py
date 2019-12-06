@@ -47,14 +47,14 @@ def places_per_city(city_id=None):
         return jsonify(new_object.to_json()), 201
 
 
-@swag_from('swagger_yaml/places_id.yml', methods=['GET', 'DELETE', 'PUT'])
-@app_views.route('/places/<place_id>', methods=['GET', 'DELETE', 'PUT'])
-def places_with_id(place_id=None):
+@swag_from('swagger_yaml/task_id.yml', methods=['GET', 'DELETE', 'PUT'])
+@app_views.route('/places/<task_id>', methods=['GET', 'DELETE', 'PUT'])
+def places_with_id(task_id=None):
     """
         places route to handle http methods for given place
     """
-    place_obj = storage.get('Place', place_id)
-    if place_obj is None:
+    task_obj = storage.get('UserTasks', task_id)
+    if task_obj is None:
         abort(404, 'Not found')
 
     if request.method == 'GET':
@@ -69,8 +69,14 @@ def places_with_id(place_id=None):
         req_json = request.get_json()
         if req_json is None:
             abort(400, 'Not a JSON')
-        place_obj.bm_update(req_json)
-        return jsonify(place_obj.to_json()), 200
+        task_obj.bm_update(req_json)
+        users = storage.all('User').values()
+        result = []
+        for u in users:
+            uj = u.to_json()
+            uj.setdefault('tasks', u.u_tasks)
+            result.append(uj)
+        return jsonify(result), 200
 
 
 @app_views.route('/places_search', methods=['GET', 'POST'])
