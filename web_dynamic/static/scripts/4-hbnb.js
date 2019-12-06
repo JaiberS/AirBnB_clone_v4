@@ -54,7 +54,54 @@ $(document).ready(function () {
       });
               
 });
- $("#b2").click(function() {
+
+$(".close").click(function() {
+    $("#myModal").hide();
+});
+ 
+ $("#b5").click(function() {
+     $(".modal-content .tform").remove();
+      $.ajax({
+              type : "POST",
+              url : "http://localhost:5003/api/v1/places_search/",
+              contentType: "application/json",
+              data : JSON.stringify({users: lista}),
+              success : function(data) {
+                $.each(data, function(key, value) {            
+                      $(".modal-content").append('<div class="tform">Name<br><input type="text" name="name" value=' + value.name + ' id="text' + value.id + '"><br><br></div>')
+                });
+            },
+      });
+    $("#myModal").show();
+    $("#b6").show();
+ });
+
+
+  $('#b6').click(function () {
+      $(".places article").remove();
+      $(".locations h4").text('');
+      for (iter in lista){
+      $.ajax({
+              type : "PUT",
+              url : "http://localhost:5003/api/v1/users/" + lista[iter],
+              contentType: "application/json",
+              data : JSON.stringify({"name": document.getElementById("text" + lista[iter]).value}),
+              success : function(data) {
+                $.each(data, function(key, value) {
+                 $('.places').append('<article><div class="title"><h2>' + value.name + '</h2></div><div class="information"></div><div class="description' + value.id + '"></div></article>'); 
+                 for (iter in value.tasks){
+                    $('.places .description' + value.id).append('<h1>' + value.tasks[iter].description + '</h1><h2>' + value.tasks[iter].state +'</h2>')
+                 }
+ 
+                });
+            },
+      });
+      } 
+    $("#myModal").hide();
+    $("#b6").hide();
+
+  });
+$("#b2").click(function() {
       $(".places article").remove();
       $(".locations h4").text('');
       nombres = []
