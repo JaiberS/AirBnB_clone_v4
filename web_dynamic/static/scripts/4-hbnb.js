@@ -34,7 +34,7 @@ $(document).ready(function () {
           error : function(error) {
           },
         });
-  $("button").click(function() {
+  $("#b1").click(function() {
       $(".places article").remove();
       $.ajax({
               type : "POST",
@@ -53,5 +53,24 @@ $(document).ready(function () {
             },
       });
               
+});
+ $("#b2").click(function() {
+      $(".places article").remove();
+      for (iter in lista){
+      $.ajax({
+              type : "DELETE",
+              url : "http://localhost:5003/api/v1/users/" + lista[iter],
+              success : function(data) {
+                $.each(data, function(key, value) {
+                 
+                 $('.places').append('<article><div class="title"><h2>' + value.name + '</h2></div><div class="information"></div><div class="description' + value.id + '"></div></article>'); 
+                 for (iter in value.tasks){
+                    $('.places .description' + value.id).append('<h1>' + value.tasks[iter].description + '</h1><h2>' + value.tasks[iter].state +'</h2>')
+                 }
+ 
+                });
+            },
+      });
+      }       
 });
 });

@@ -49,7 +49,13 @@ def user_with_id(user_id=None):
     if request.method == 'DELETE':
         user_obj.delete()
         del user_obj
-        return jsonify({}), 200
+        users = storage.all('User').values()
+        result = []
+        for u in users:
+            uj = u.to_json()
+            uj.setdefault('tasks', u.u_tasks)
+            result.append(uj)
+        return jsonify(result)
 
     if request.method == 'PUT':
         req_json = request.get_json()

@@ -8,6 +8,7 @@ from flasgger.utils import swag_from
 from models import storage, CNC
 from os import environ
 from json import dumps
+from pdb import set_trace
 STORAGE_TYPE = environ.get('HBNB_TYPE_STORAGE')
 
 
