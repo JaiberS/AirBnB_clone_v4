@@ -4,6 +4,7 @@ User Class from Models Module
 """
 import hashlib
 import os
+import models
 from models.base_model import BaseModel, Base
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String, Float
@@ -16,30 +17,25 @@ class User(BaseModel, Base):
     """
     if STORAGE_TYPE == "db":
         __tablename__ = 'users'
-        name = Column(String(128), nullable=True)
-        places = relationship('Place', backref='user', cascade='delete')
-        reviews = relationship('Review', backref='user', cascade='delete')
+        name = Column(String(128), nullable=False)
     else:
-        email = ''
-        password = ''
-        first_name = ''
-        last_name = ''
+        name = ''
 
     def __init__(self, *args, **kwargs):
         """
             instantiates user object
         """
-        if kwargs:
-            pwd = kwargs.pop('password', None)
-            if pwd:
-                User.__set_password(self, pwd)
         super().__init__(*args, **kwargs)
 
-    def __set_password(self, pwd):
+    @property
+    def u_tasks(self):
         """
-            custom setter: encrypts password to MD5
+        getter method, returns list of City objs from storage
+        linked to the current State
         """
-        secure = hashlib.md5()
-        secure.update(pwd.encode("utf-8"))
-        secure_password = secure.hexdigest()
-        setattr(self, "password", secure_password)
+        task_list = []
+        cont = 0
+        for task in models.storage.all("UserTasks").values():
+            if task.user_id == self.id:
+                task_list.append(task.to_json())
+        return task_list

@@ -14,7 +14,6 @@ def users_no_id(user_id=None):
     """
         users route that handles http requests with no ID given
     """
-
     if request.method == 'GET':
         all_users = storage.all('User')
         all_users = [obj.to_json() for obj in all_users.values()]
