@@ -218,7 +218,6 @@ $(".close").click(function() {
      $("#b8").hide();
     $("#myModal").hide();
  });
-$
 
 $("#b2").click(function() {
       $(".places article").remove();

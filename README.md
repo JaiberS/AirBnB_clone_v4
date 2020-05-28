@@ -1,18 +1,13 @@
-<img src="https://github.com/jarehec/AirBnB_clone_v3/blob/master/dev/HBTN-hbnb-Final.png" width="160" height=auto />
-
-# AirBnB Clone: Phase # 3
+# Bunny Full-stack test
 
 : API with Swagger
 
 ## Description
 
-Project attempts to clone the the AirBnB application and website, including the
-database, storage, RESTful API, Web Framework, and Front End.  Currently the
-application is designed to run with 2 storage engine models:
-
-* File Storage Engine:
-
-  * `/models/engine/file_storage.py`
+Development a to do web app with two sets of REST endpoints and the UI to
+display the data:
+● USERS CRUD
+● USER’s TASKS CRUD
 
 * Database Storage Engine:
 
@@ -46,121 +41,21 @@ HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_test_db HBNB_TYPE_STORAGE=db \
   * __web static:__ [W3C Validator](https://validator.w3.org/)
   * __bash:__ ShellCheck 0.3.3
 
-<img src="https://github.com/jarehec/AirBnB_clone_v3/blob/master/dev/hbnb_step5.png" />
 
 ## Configuration Files
 
-The `/config/` directory contains configuration files for `nginx` and the
-Upstart scripts.  The nginx configuration file is for the configuration file in
-the path: `/etc/nginx/sites-available/default`.  The enabled site is a sym link
-to that configuration file.  The upstart script should be saved in the path:
-`/etc/init/[FILE_NAME.conf]`.  To begin this service, execute:
+In order to install the pip requirements:
 
-```
-$ sudo start airbnb.conf
-```
-This script's main task is to execute the following `gunicorn` command:
+pip install -r requirements.txt
 
-```
-$ gunicorn --bind 127.0.0.1:8001 wsgi.wsgi:web_flask.app
-```
+For a detailed installation:
 
-The `gunicorn` command starts an instance of a Flask Application.
-
----
-
-### Web Server Gateway Interface (WSGI)
-
-All integration with gunicorn occurs with `Upstart` `.conf` files.  The python
-code for the WSGI is listed in the `/wsgi/` directory.  These python files run
-the designated Flask Application.
-
-## Setup
-
-This project comes with various setup scripts to support automation, especially
-during maintanence or to scale the entire project.  The following files are the
-setupfiles along with a brief explanation:
-
-* **`dev/setup.sql`:** Drops test and dev databases, and then reinitializes
-the datbase.
-
-  * Usage: `$ cat dev/setup.sql | mysql -uroot -p`
-
-* **`setup_mysql_dev.sql`:** initialiezs dev database with mysql for testing
-
-  * Usage: `$ cat setup_mysql_dev.sql | mysql -uroot -p`
-
-* **`setup_mysql_test.sql`:** initializes test database with mysql for testing
-
-  * Usage: `$ cat setup_mysql_test.sql | mysql -uroot -p`
-
-* **`0-setup_web_static.sh`:** sets up nginx web server config file & the file
-  structure.
-
-  * Usage: `$ sudo ./0-setup_web_static.sh`
-
-* **`3-deploy_web_static.py`:** uses 2 functions from (1-pack_web_static.py &
-  2-do_deploy_web_static.py) that use the fabric3 python integration, to create
-  a `.tgz` file on local host of all the local web static fils, and then calls
-  the other function to deploy the compressed web static files.  Command must
-  be executed from the `AirBnB_clone` root directory.
-
-  * Usage: `$ fab -f 3-deploy_web_static.py deploy -i ~/.ssh/holberton -u ubuntu`
-
-## Testing
-
-### `unittest`
-
-This project uses python library, `unittest` to run tests on all python files.
-All unittests are in the `./tests` directory with the command:
-
-* File Storage Engine Model:
-
-  * `$ python3 -m unittest discover -v ./tests/`
-
-* DataBase Storage Engine Model
-
-```
-$ HBNB_MYSQL_USER=hbnb_test HBNB_MYSQL_PWD=hbnb_test_pwd \
-HBNB_MYSQL_HOST=localhost HBNB_MYSQL_DB=hbnb_test_db HBNB_TYPE_STORAGE=db \
-python3 -m unittest discover -v ./tests/
-```
-
----
-
-### All Tests
-
-The bash script `init_test.sh` executes all these tests for both File Storage &
-DataBase Engine Models:
-
-  * checks `pep8` style
-
-  * runs all unittests
-
-  * runs all w3c_validator tests
-
-  * cleans up all `__pycache__` directories and the storage file, `file.json`
-
-  * **Usage `init_test.sh`:**
-
-```
-$ ./dev/init_test.sh
-```
-
----
+echo 'deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7-dmr' | sudo tee -a /etc/apt/sources.list && sudo apt-get update && sudo apt-get install git && sudo apt-get install mysql-server-5.7 &&  sudo apt-get install -y python3-pip &&  sudo pip3 install flask &&  sudo pip3 install sqlalchemy &&  sudo apt-get install python3-dev && sudo apt-get install libmysqlclient-dev && sudo apt-get install zlib1g-dev && sudo pip3 install mysqlclient==1.3.10 && sudo pip3 install flasgger && sudo pip3 install flask_cors
 
 ### CLI Interactive Tests
 
 * This project uses python library, `cmd` to run tests in an interactive command
   line interface.  To begin tests with the CLI, run this script:
-
-#### File Storage Engine Model
-
-```
-$ ./console.py
-```
-
-#### To execute the CLI using the Database Storage Engine Model:
 
 ```
 $ HBNB_MYSQL_USER=hbnb_test HBNB_MYSQL_PWD=hbnb_test_pwd \
@@ -205,21 +100,5 @@ create: create [ARG] [PARAM 1] [PARAM 2] ...
 
 ---
 
-### Continuous Integration Tests
-
-Uses [Travis-CI](https://travis-ci.org/) to run all tests on all commits to the
-github repo
-
-## Authors
-
-* MJ Johnson, [@mj31508](https://github.com/mj31508)
-* David John Coleman II, [davidjohncoleman.com](http://www.davidjohncoleman.com/) | [@djohncoleman](https://twitter.com/djohncoleman)
-* Kimberly Wong, [kjowong](https://github.com/kjowong) | [@kjowong](https://twitter.com/kjowong) | [kjowong@gmail.com](kjowong@gmail.com)
-* Carrie Ybay, [hicarrie](https://github.com/hicarrie) | [@hicarrie_](https://twitter.com/hicarrie_)
-* Jared Heck, [jarehec](https://github.com/jarehec) | [@jarehec](https://twitter.com/jarehec)
-* Jaiber Ramirez, [JaiberS](https://github.com/JaiberS)
-* Lucia Rodriguezm [luroto](https://github.com/luroto)
-
-## License
-
-MIT License
+Example video:
+https://drive.google.com/file/d/1cztPerXUVfDoM-c-QMGJ1eaRvm1f64ST/view?usp=sharing

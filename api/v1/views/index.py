@@ -25,11 +25,7 @@ def stats():
     if request.method == 'GET':
         response = {}
         PLURALS = {
-            "Amenity": "amenities",
-            "City": "cities",
-            "Place": "places",
-            "Review": "reviews",
-            "State": "states",
+            "UserTasks": "tasks",
             "User": "users"
         }
         for key, value in PLURALS.items():
